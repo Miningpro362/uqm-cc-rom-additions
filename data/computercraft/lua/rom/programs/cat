@@ -1,0 +1,30 @@
+local args = { ... }
+
+if #args == 0 then
+  printError("You need at least 1 argument (a filename)!")
+
+elseif #args == 1 then
+  local f = fs.open(args[1], "r")
+
+  if f == nil then
+    printError("The file `"..args[1].."` doesn't exist or is a directory!")
+  else
+    print(f.readAll())
+    f.close()
+  end
+
+else
+  for k,v in ipairs(args) do
+    local f = fs.open(v, "r")
+
+    if f == nil then
+      printError("The file `".."` doesn't exist or is a directory!")
+    else
+      print("--[[ Start of `"..v.."` ]]--")
+      print(f.readAll())
+      f.close()
+      print("--[[ End of `"..v.."` ]]--\n")
+    end
+  end
+
+end
